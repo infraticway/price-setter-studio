@@ -68,11 +68,11 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
         return (
           <span
             key={p.id}
-            className="absolute inline-flex items-center justify-center font-extrabold leading-none rounded-sm whitespace-nowrap overflow-hidden"
+            className="absolute inline-flex items-center justify-center font-extrabold leading-none rounded-sm whitespace-nowrap"
             style={{
               left: `${p.xPct}%`,
               top: `${p.yPct}%`,
-              width: `${p.wPct}%`,
+              minWidth: `${p.wPct}%`,
               height: `${p.hPct}%`,
               fontSize: "clamp(8px, 1.1cqw, 16px)",
               fontFamily:
