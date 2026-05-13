@@ -45,10 +45,10 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
         const isCubanito = p.id.startsWith("p5-cubanito-");
         const displayBox = isCubanito
           ? {
-              left: p.xPct - 0.18,
-              top: p.yPct - 0.08,
-              width: p.wPct + 0.55,
-              height: p.hPct + 0.24,
+              left: p.xPct - 0.24,
+              top: p.yPct - 0.1,
+              width: p.wPct + 0.72,
+              height: p.hPct + 0.3,
             }
           : {
               left: p.xPct,
@@ -96,7 +96,9 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
               letterSpacing: "-0.01em",
               color: "#fff8e7",
               background:
-                "linear-gradient(180deg, rgba(20,10,5,0.96), rgba(40,20,10,0.92))",
+                isCubanito
+                  ? "linear-gradient(180deg, rgb(20,10,5), rgb(40,20,10))"
+                  : "linear-gradient(180deg, rgba(20,10,5,0.96), rgba(40,20,10,0.92))",
               border: "1px solid rgba(255,200,120,0.35)",
               boxShadow:
                 "0 1px 2px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
