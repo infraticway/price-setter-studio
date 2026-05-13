@@ -66,16 +66,24 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
         return (
           <span
             key={p.id}
-            className="flex items-center font-bold text-primary leading-none"
+            className="flex items-center justify-center font-extrabold leading-none rounded-sm"
             style={{
               ...style,
-              fontSize: "clamp(7px, 1.05cqw, 16px)",
+              fontSize: "clamp(9px, 1.25cqw, 18px)",
               fontFamily:
-                "'DSEG7 Classic', 'Share Tech Mono', ui-monospace, monospace",
-              letterSpacing: "0.02em",
+                "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
+              letterSpacing: "-0.01em",
+              color: "#fff8e7",
+              background:
+                "linear-gradient(180deg, rgba(20,10,5,0.92), rgba(40,20,10,0.85))",
+              border: "1px solid rgba(255,200,120,0.35)",
+              boxShadow:
+                "0 1px 2px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
+              padding: "0 4%",
+              textShadow: "0 1px 2px rgba(0,0,0,0.6)",
             }}
           >
-            {value || "—,—"}
+            {value ? `R$ ${value}` : "—"}
           </span>
         );
       })}
