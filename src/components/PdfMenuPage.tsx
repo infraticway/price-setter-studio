@@ -43,6 +43,19 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
       {positions.map((p) => {
         const value = getPrice(p.id);
         const isCubanito = p.id.startsWith("p5-cubanito-");
+        const displayBox = isCubanito
+          ? {
+              left: p.xPct - 0.24,
+              top: p.yPct - 0.1,
+              width: p.wPct + 0.72,
+              height: p.hPct + 0.3,
+            }
+          : {
+              left: p.xPct,
+              top: p.yPct,
+              width: p.wPct,
+              height: p.hPct,
+            };
         if (editable) {
           const inputStyle: React.CSSProperties = {
             position: "absolute",
@@ -71,10 +84,10 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
             key={p.id}
             className="absolute inline-flex items-center justify-center font-extrabold leading-none rounded-sm whitespace-nowrap"
             style={{
-              left: `${p.xPct}%`,
-              top: `${p.yPct}%`,
-              width: `${p.wPct}%`,
-              height: `${p.hPct}%`,
+              left: `${displayBox.left}%`,
+              top: `${displayBox.top}%`,
+              width: `${displayBox.width}%`,
+              height: `${displayBox.height}%`,
               fontSize: isCubanito
                 ? "clamp(7px, 0.95cqw, 14px)"
                 : "clamp(8px, 1.1cqw, 16px)",
@@ -83,7 +96,9 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
               letterSpacing: "-0.01em",
               color: "#fff8e7",
               background:
-                "linear-gradient(180deg, rgba(20,10,5,0.96), rgba(40,20,10,0.92))",
+                isCubanito
+                  ? "linear-gradient(180deg, rgb(20,10,5), rgb(40,20,10))"
+                  : "linear-gradient(180deg, rgba(20,10,5,0.96), rgba(40,20,10,0.92))",
               border: "1px solid rgba(255,200,120,0.35)",
               boxShadow:
                 "0 1px 2px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
