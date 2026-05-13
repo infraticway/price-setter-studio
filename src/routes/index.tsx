@@ -1,105 +1,73 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { MENU } from "@/lib/menu-data";
-import { MenuItemRow } from "@/components/MenuItemRow";
-import heroImg from "@/assets/menu/hero.jpg";
-import hotImg from "@/assets/menu/quentes.jpg";
-import coldImg from "@/assets/menu/geladas.jpg";
-import savoryImg from "@/assets/menu/salgados.jpg";
-import sweetsImg from "@/assets/menu/doces.jpg";
-import alfajoresImg from "@/assets/menu/alfajores.jpg";
+import { PdfMenuPage } from "@/components/PdfMenuPage";
+
+import p1 from "@/assets/pdf/page-1.jpg";
+import p2 from "@/assets/pdf/page-2.jpg";
+import p3 from "@/assets/pdf/page-3.jpg";
+import p4 from "@/assets/pdf/page-4.jpg";
+import p5 from "@/assets/pdf/page-5.jpg";
+import p6 from "@/assets/pdf/page-6.jpg";
+import p7 from "@/assets/pdf/page-7.jpg";
 
 export const Route = createFileRoute("/")({
+  component: HomePage,
   head: () => ({
     meta: [
-      { title: "Havanna Cafeteria Argentina — Cardápio" },
-      { name: "description", content: "Cardápio completo Havanna Cafeteria Argentina: cafés, bebidas geladas, alfajores, doces e clássicos argentinos." },
+      { title: "Havanna - Cafeteria Argentina" },
+      {
+        name: "description",
+        content:
+          "Cardápio Havanna Cafeteria Argentina: cafés, vannaccinos, alfajores, doces e salgados.",
+      },
     ],
   }),
-  component: MenuPage,
 });
 
-const PAGE_IMAGES: Record<string, string> = {
-  quentes: hotImg,
-  geladas: coldImg,
-  salgados: savoryImg,
-  doces: sweetsImg,
-  alfajores: alfajoresImg,
-};
+const PAGES = [
+  { num: 1, src: p1, aspect: 595.276 / 841.89 },
+  { num: 2, src: p2, aspect: 1190.55 / 841.89 },
+  { num: 3, src: p3, aspect: 1190.55 / 841.89 },
+  { num: 4, src: p4, aspect: 1190.55 / 841.89 },
+  { num: 5, src: p5, aspect: 1190.55 / 841.89 },
+  { num: 6, src: p6, aspect: 1190.55 / 841.89 },
+  { num: 7, src: p7, aspect: 595.276 / 841.89 },
+];
 
-function MenuPage() {
+function HomePage() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="bg-primary text-primary-foreground pt-12 pb-0 px-4 text-center relative">
-        <Link
-          to="/admin"
-          className="absolute top-3 right-3 text-[10px] uppercase tracking-widest text-primary-foreground/60 hover:text-primary-foreground"
-        >
-          Admin
-        </Link>
-        <h1 className="text-5xl md:text-7xl font-black tracking-[0.25em]">
-          HAVANNA
-        </h1>
-        <p className="mt-2 text-xs md:text-sm tracking-[0.4em] uppercase text-primary-foreground/80">
-          Cafeteria Argentina
-        </p>
-        <p className="mt-6 italic text-sm md:text-base text-primary-foreground/90 mb-8">
-          O melhooor dulce de leche argentino há 20 anos no Brasil.
-        </p>
-        <img
-          src={heroImg}
-          alt="Variedade de produtos Havanna: alfajor, café gelado, espresso, bolo de doce de leite e empanadas"
-          width={1600}
-          height={1024}
-          className="block w-full max-w-3xl mx-auto rounded-t-2xl shadow-2xl"
-        />
+      <header className="sticky top-0 z-10 bg-background/90 backdrop-blur border-b border-border">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+          <h1 className="text-lg font-bold text-primary tracking-wider">
+            HAVANNA · Cafeteria Argentina
+          </h1>
+          <Link
+            to="/admin"
+            className="text-xs text-muted-foreground hover:text-primary"
+          >
+            admin
+          </Link>
+        </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 py-10 space-y-14">
-        {MENU.map((page) => (
-          <section key={page.id}>
-            <div className="mb-6">
-              <h2 className="text-3xl md:text-4xl font-black text-primary border-b-2 border-accent pb-2">
-                {page.title}
-              </h2>
-            </div>
-
-            {PAGE_IMAGES[page.id] && (
-              <img
-                src={PAGE_IMAGES[page.id]}
-                alt={page.title}
-                width={1280}
-                height={896}
-                loading="lazy"
-                className="w-full h-56 md:h-72 object-cover rounded-xl shadow-md mb-8"
-              />
-            )}
-
-            {page.sections.map((section) => (
-              <div key={section.id} className="mb-10">
-                <h3 className="text-lg font-bold uppercase tracking-widest text-accent mb-3">
-                  {section.title}
-                </h3>
-                {section.subtitle && (
-                  <p className="text-sm text-muted-foreground italic mb-4">
-                    {section.subtitle}
-                  </p>
-                )}
-                <div className="bg-card rounded-md px-4 shadow-sm">
-                  {section.items.map((item) => (
-                    <MenuItemRow key={item.id} item={item} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </section>
+      <main className="max-w-6xl mx-auto px-2 sm:px-4 py-4 space-y-4">
+        {PAGES.map((p) => (
+          <div
+            key={p.num}
+            className="container-query shadow-md rounded-md overflow-hidden bg-white"
+            style={{ containerType: "inline-size" }}
+          >
+            <PdfMenuPage
+              pageNum={p.num}
+              imgSrc={p.src}
+              aspect={p.aspect}
+            />
+          </div>
         ))}
       </main>
 
-      <footer className="bg-primary text-primary-foreground text-center py-8 px-4 mt-10">
-        <p className="italic text-sm">
-          O melhooor dulce de leche argentino há 20 anos no Brasil.
-        </p>
-        <p className="mt-2 text-xs tracking-widest opacity-80">havanna.com.br</p>
+      <footer className="text-center text-xs text-muted-foreground py-6">
+        O melhor dulce de leche argentino há 20 anos no Brasil · havanna.com.br
       </footer>
     </div>
   );

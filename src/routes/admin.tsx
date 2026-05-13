@@ -1,57 +1,59 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect, type FormEvent } from "react";
-import { MENU } from "@/lib/menu-data";
-import { loadPrices, savePrices } from "@/lib/use-prices";
+import { PdfMenuPage } from "@/components/PdfMenuPage";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Toaster } from "@/components/ui/sonner";
 
+import p1 from "@/assets/pdf/page-1.jpg";
+import p2 from "@/assets/pdf/page-2.jpg";
+import p3 from "@/assets/pdf/page-3.jpg";
+import p4 from "@/assets/pdf/page-4.jpg";
+import p5 from "@/assets/pdf/page-5.jpg";
+import p6 from "@/assets/pdf/page-6.jpg";
+import p7 from "@/assets/pdf/page-7.jpg";
+
 const ADMIN_PASSWORD = "havanna2026";
 const AUTH_KEY = "havanna-admin-auth";
 
 export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin — Havanna" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({
+    meta: [
+      { title: "Admin — Havanna" },
+      { name: "robots", content: "noindex" },
+    ],
+  }),
   component: AdminPage,
 });
+
+const PAGES = [
+  { num: 1, src: p1, aspect: 595.276 / 841.89 },
+  { num: 2, src: p2, aspect: 1190.55 / 841.89 },
+  { num: 3, src: p3, aspect: 1190.55 / 841.89 },
+  { num: 4, src: p4, aspect: 1190.55 / 841.89 },
+  { num: 5, src: p5, aspect: 1190.55 / 841.89 },
+  { num: 6, src: p6, aspect: 1190.55 / 841.89 },
+  { num: 7, src: p7, aspect: 595.276 / 841.89 },
+];
 
 function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
-  const [draft, setDraft] = useState<Record<string, string>>({});
 
   useEffect(() => {
     if (sessionStorage.getItem(AUTH_KEY) === "1") setAuthed(true);
   }, []);
-
-  useEffect(() => {
-    if (authed) {
-      const stored = loadPrices();
-      const initial: Record<string, string> = {};
-      MENU.forEach((p) =>
-        p.sections.forEach((s) =>
-          s.items.forEach((i) => {
-            initial[i.id] = stored[i.id] ?? i.defaultPrice;
-          }),
-        ),
-      );
-      setDraft(initial);
-    }
-  }, [authed]);
 
   function handleLogin(e: FormEvent) {
     e.preventDefault();
     if (password === ADMIN_PASSWORD) {
       sessionStorage.setItem(AUTH_KEY, "1");
       setAuthed(true);
+      toast.success("Bem-vindo!");
     } else {
       toast.error("Senha incorreta");
     }
-  }
-
-  function handleSave() {
-    savePrices(draft);
-    toast.success("Preços salvos!");
   }
 
   function handleLogout() {
@@ -96,13 +98,17 @@ function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background">
       <Toaster />
-      <header className="bg-primary text-primary-foreground py-6 px-4 sticky top-0 z-10 shadow-md">
-        <div className="max-w-4xl mx-auto flex items-center justify-between flex-wrap gap-3">
+      <header className="sticky top-0 z-20 bg-primary text-primary-foreground py-3 px-4 shadow-md">
+        <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-3">
           <div>
-            <h1 className="text-xl font-black tracking-wider">HAVANNA · Admin</h1>
-            <p className="text-xs opacity-80">Edite os preços abaixo e clique em Salvar.</p>
+            <h1 className="text-base font-black tracking-wider">
+              HAVANNA · Admin
+            </h1>
+            <p className="text-xs opacity-80">
+              Digite os preços direto sobre o cardápio. Salva automaticamente.
+            </p>
           </div>
           <div className="flex gap-2">
             <Link
@@ -118,62 +124,22 @@ function AdminPage() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-10">
-        {MENU.map((page) => (
-          <section key={page.id}>
-            <h2 className="text-2xl font-black text-primary border-b-2 border-accent pb-2 mb-4">
-              {page.title}
-            </h2>
-            {page.sections.map((section) => (
-              <div key={section.id} className="mb-6">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-accent mb-2">
-                  {section.title}
-                </h3>
-                <div className="bg-card rounded-md border border-border divide-y divide-border">
-                  {section.items.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex items-center gap-3 px-4 py-3"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="font-semibold text-sm text-primary truncate">
-                          {item.name}
-                        </div>
-                        {item.size && (
-                          <div className="text-xs text-muted-foreground">
-                            {item.size}
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-1 shrink-0">
-                        <span className="text-sm font-semibold text-muted-foreground">
-                          R$
-                        </span>
-                        <Input
-                          value={draft[item.id] ?? ""}
-                          onChange={(e) =>
-                            setDraft((d) => ({ ...d, [item.id]: e.target.value }))
-                          }
-                          className="w-24 text-right font-bold"
-                          placeholder="00,00"
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </section>
+      <main className="max-w-6xl mx-auto px-2 sm:px-4 py-4 space-y-4">
+        {PAGES.map((p) => (
+          <div
+            key={p.num}
+            className="shadow-md rounded-md overflow-hidden bg-white"
+            style={{ containerType: "inline-size" }}
+          >
+            <PdfMenuPage
+              pageNum={p.num}
+              imgSrc={p.src}
+              aspect={p.aspect}
+              editable
+            />
+          </div>
         ))}
       </main>
-
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border p-4 shadow-lg">
-        <div className="max-w-4xl mx-auto flex justify-end">
-          <Button size="lg" onClick={handleSave}>
-            Salvar preços
-          </Button>
-        </div>
-      </div>
     </div>
   );
 }
