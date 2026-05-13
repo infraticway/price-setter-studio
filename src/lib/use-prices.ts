@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
-import { ALL_ITEMS } from "./menu-data";
 
-const KEY = "havanna-prices-v1";
+const KEY = "havanna-prices-v2";
 
 export function loadPrices(): Record<string, string> {
   if (typeof window === "undefined") return {};
@@ -32,13 +31,7 @@ export function usePrices() {
     };
   }, []);
 
-  const getPrice = useCallback(
-    (id: string) => {
-      const item = ALL_ITEMS.find((i) => i.id === id);
-      return prices[id] ?? item?.defaultPrice ?? "00,00";
-    },
-    [prices],
-  );
+  const getPrice = useCallback((id: string) => prices[id] ?? "", [prices]);
 
   return { prices, getPrice };
 }
