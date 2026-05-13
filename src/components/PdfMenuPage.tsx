@@ -63,31 +63,28 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
             />
           );
         }
-        // Display: badge anchored at the box but with auto-width so it
-        // never extends past the price column into description text.
-        const centerX = p.xPct + p.wPct / 2;
-        const centerY = p.yPct + p.hPct / 2;
+        // Display: badge fills the original price box exactly so it
+        // fully covers the placeholder text printed on the PDF image.
         return (
           <span
             key={p.id}
-            className="absolute inline-flex items-center justify-center font-extrabold leading-none rounded-sm whitespace-nowrap"
+            className="absolute inline-flex items-center justify-center font-extrabold leading-none rounded-sm whitespace-nowrap overflow-hidden"
             style={{
-              left: `${centerX}%`,
-              top: `${centerY}%`,
-              transform: "translate(-50%, -50%)",
+              left: `${p.xPct}%`,
+              top: `${p.yPct}%`,
+              width: `${p.wPct}%`,
               height: `${p.hPct}%`,
-              maxWidth: `${p.wPct + 2}%`,
-              fontSize: "clamp(9px, 1.2cqw, 18px)",
+              fontSize: "clamp(8px, 1.1cqw, 16px)",
               fontFamily:
                 "'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif",
               letterSpacing: "-0.01em",
               color: "#fff8e7",
               background:
-                "linear-gradient(180deg, rgba(20,10,5,0.92), rgba(40,20,10,0.85))",
+                "linear-gradient(180deg, rgba(20,10,5,0.96), rgba(40,20,10,0.92))",
               border: "1px solid rgba(255,200,120,0.35)",
               boxShadow:
                 "0 1px 2px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
-              padding: "0 0.6em",
+              padding: "0 0.4em",
               textShadow: "0 1px 2px rgba(0,0,0,0.6)",
             }}
           >
