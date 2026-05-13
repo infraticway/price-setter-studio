@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { PdfMenuPage } from "@/components/PdfMenuPage";
 
 import p1 from "@/assets/pdf/page-1.jpg";
@@ -41,12 +41,6 @@ function HomePage() {
           <h1 className="text-lg font-bold text-primary tracking-wider">
             HAVANNA · Cafeteria Argentina
           </h1>
-          <Link
-            to="/admin"
-            className="text-xs text-muted-foreground hover:text-primary"
-          >
-            admin
-          </Link>
         </div>
       </header>
 
