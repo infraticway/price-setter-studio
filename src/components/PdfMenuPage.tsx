@@ -43,6 +43,19 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
       {positions.map((p) => {
         const value = getPrice(p.id);
         const isCubanito = p.id.startsWith("p5-cubanito-");
+        const displayBox = isCubanito
+          ? {
+              left: p.xPct - 0.18,
+              top: p.yPct - 0.08,
+              width: p.wPct + 0.55,
+              height: p.hPct + 0.24,
+            }
+          : {
+              left: p.xPct,
+              top: p.yPct,
+              width: p.wPct,
+              height: p.hPct,
+            };
         if (editable) {
           const inputStyle: React.CSSProperties = {
             position: "absolute",
@@ -71,10 +84,10 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
             key={p.id}
             className="absolute inline-flex items-center justify-center font-extrabold leading-none rounded-sm whitespace-nowrap"
             style={{
-              left: `${p.xPct}%`,
-              top: `${p.yPct}%`,
-              width: `${p.wPct}%`,
-              height: `${p.hPct}%`,
+              left: `${displayBox.left}%`,
+              top: `${displayBox.top}%`,
+              width: `${displayBox.width}%`,
+              height: `${displayBox.height}%`,
               fontSize: isCubanito
                 ? "clamp(7px, 0.95cqw, 14px)"
                 : "clamp(8px, 1.1cqw, 16px)",
