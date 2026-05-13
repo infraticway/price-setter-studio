@@ -18,6 +18,11 @@ export default defineConfig({
         "cardapiocafeteriatrad.havanna.com.br",
         ".havanna.com.br",
       ],
+      hmr: {
+        host: "cardapiocafeteriatrad.havanna.com.br",
+        protocol: "wss",
+        clientPort: 443,
+      },
     },
   },
 });
