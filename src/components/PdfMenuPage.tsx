@@ -61,7 +61,7 @@ export function PdfMenuPage({ pageNum, imgSrc, aspect, editable = false }: Props
             position: "absolute",
             left: `${p.xPct}%`,
             top: `${p.yPct}%`,
-            width: `${p.wPct + 4}%`,
+            width: `${p.wPct + 1}%`,
             height: `${p.hPct}%`,
           };
           return (
