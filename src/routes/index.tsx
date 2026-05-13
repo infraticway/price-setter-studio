@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { MENU } from "@/lib/menu-data";
 import { MenuItemRow } from "@/components/MenuItemRow";
-import heroImg from "@/assets/havanna-hero.jpg";
-import hotImg from "@/assets/havanna-hot.jpg";
-import coldImg from "@/assets/havanna-cold.jpg";
-import savoryImg from "@/assets/havanna-savory.jpg";
-import sweetsImg from "@/assets/havanna-sweets.jpg";
-import alfajoresImg from "@/assets/havanna-alfajores.jpg";
+import heroImg from "@/assets/menu/hero.jpg";
+import hotImg from "@/assets/menu/quentes.jpg";
+import coldImg from "@/assets/menu/geladas.jpg";
+import savoryImg from "@/assets/menu/salgados.jpg";
+import sweetsImg from "@/assets/menu/doces.jpg";
+import alfajoresImg from "@/assets/menu/alfajores.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
